@@ -39,3 +39,8 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# documento de diseno de pruebas (local)
+docs/
+scripts/generate_test_design_pdf.py
+
