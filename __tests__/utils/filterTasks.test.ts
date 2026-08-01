@@ -29,4 +29,24 @@ describe('filterTasksByStatus', () => {
     // @ts-expect-error probando entrada inválida en runtime
     expect(() => filterTasksByStatus(mockTasks, 'invalido')).toThrow();
   });
+
+  it('devuelve un arreglo vacío cuando la lista de tareas está vacía', () => {
+    const result = filterTasksByStatus([], 'pending');
+    expect(result).toEqual([]);
+  });
+
+  it('incluye el título esperado al filtrar por pending', () => {
+    const result = filterTasksByStatus(mockTasks, 'pending');
+    const titles = result.map((t) => t.title);
+    expect(titles).toContain('Comprar leche');
+    expect(titles).toContain('Hacer ejercicio');
+    expect(result).toHaveLength(2);
+  });
+
+  it('lanza un error con mensaje claro ante un estado inesperado', () => {
+    // @ts-expect-error valor inesperado en runtime
+    expect(() => filterTasksByStatus(mockTasks, '')).toThrow('Estado inválido');
+    // @ts-expect-error valor inesperado en runtime
+    expect(() => filterTasksByStatus(mockTasks, null)).toThrow();
+  });
 });

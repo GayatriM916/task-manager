@@ -33,5 +33,17 @@ describe('validateTaskTitle', () => {
       const titulo101 = 'A'.repeat(101);
       expect(validateTaskTitle(titulo101)).toBe('El título no puede exceder los 100 caracteres');
     });
+
+    it('retorna mensaje de error para título null o undefined', () => {
+      // @ts-expect-error caso límite: null
+      expect(validateTaskTitle(null)).toBe('El título es obligatorio');
+      // @ts-expect-error caso límite: undefined
+      expect(validateTaskTitle(undefined)).toBe('El título es obligatorio');
+    });
+
+    it('el mensaje de título corto contiene la restricción de longitud', () => {
+      const error = validateTaskTitle('Ab');
+      expect(error).toContain('al menos 3 caracteres');
+    });
   });
 });
