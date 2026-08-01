@@ -38,3 +38,25 @@ describe('TaskCard', () => {
     expect(mockOnDelete).toHaveBeenCalledTimes(1);
   });
 });
+
+describe('TaskCard - interfaz con consultas accesibles', () => {
+  beforeEach(() => {
+    mockOnDelete.mockClear();
+  });
+
+  it('renderiza de forma aislada y consulta título y estado con getByText', async () => {
+    await render(<TaskCard task={mockTask} onDelete={mockOnDelete} />);
+
+    expect(screen.getByText('Estudiar React Native con Testing Library')).toBeTruthy();
+    expect(screen.getByText('○ Pendiente')).toBeTruthy();
+  });
+
+  it('consulta el contenedor con getByRole y elimina con fireEvent.press', async () => {
+    await render(<TaskCard task={mockTask} onDelete={mockOnDelete} />);
+
+    expect(screen.getByRole('button')).toBeTruthy();
+    await fireEvent.press(screen.getByText('Eliminar'));
+
+    expect(mockOnDelete).toHaveBeenCalledWith('1');
+  });
+});
